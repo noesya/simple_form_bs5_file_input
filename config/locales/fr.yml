@@ -1,0 +1,12 @@
+fr:
+  simple_form_image_fields:
+    single_deletable_file:
+      choose_file: 'Choisir un fichier...'
+      delete: 'Effacer'
+    single_resizable_file:
+      change_image: 'Modifier'
+      delete_image: 'Supprimer'
+      modal_close: 'Fermer'
+      modal_title: "Cadrer l'image"
+      modal_validate: 'Valider'
+      send_image: 'Envoyer une image'

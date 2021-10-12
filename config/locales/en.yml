@@ -1,0 +1,12 @@
+en:
+  simple_form_image_fields:
+    single_deletable_file:
+      choose_file: 'Choose file...'
+      delete: 'Delete'
+    single_resizable_file:
+      change_image: 'Change image'
+      delete_image: 'Delete image'
+      modal_close: 'Close'
+      modal_title: 'Resize the image'
+      modal_validate: 'Validate'
+      send_image: 'Send image'
