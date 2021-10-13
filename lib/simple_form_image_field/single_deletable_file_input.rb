@@ -8,7 +8,6 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     format('
       <div class="sdfi-deletable-file js-sdfi-deletable-file %s">
         %s
-        %s
         <div class="%s">
           <button type="button" class="btn js-sdfi-deletable-file__change-btn">%s</button>
           <label for="%s" class="sdfi-deletable-file__label js-sdfi-deletable-file__label">
@@ -18,8 +17,9 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
           <div class="sdfi-deletable-file__upload-progress"></div>
           <input type="hidden" name="%s" class="js-sdfi-deletable-file__hidden-field" %s />
         </div>
+        %s
       </div>
-    ', has_file_class, preview_div, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value)
+    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value, preview_div)
   end
 
   def preview_div

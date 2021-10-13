@@ -59,15 +59,15 @@ class SingleResizableFileInput < SimpleForm::Inputs::Base
   end
 
   def modal_title
-    I18n.t('simple_form_image_fields.single_resizable_file.modal_title')
+    I18n.t('simple_form_image_field.single_resizable_file.modal_title')
   end
 
   def close_button_text
-    I18n.t('simple_form_image_fields.single_resizable_file.modal_close')
+    I18n.t('simple_form_image_field.single_resizable_file.modal_close')
   end
 
   def validate_button_text
-    I18n.t('simple_form_image_fields.single_resizable_file.modal_validate')
+    I18n.t('simple_form_image_field.single_resizable_file.modal_validate')
   end
 
   def preview_image_url
@@ -79,7 +79,7 @@ class SingleResizableFileInput < SimpleForm::Inputs::Base
   end
 
   def change_image_text
-    I18n.t('simple_form_image_fields.single_resizable_file.change_image')
+    I18n.t('simple_form_image_field.single_resizable_file.change_image')
   end
 
   def input_field(wrapper_options)
@@ -89,7 +89,7 @@ class SingleResizableFileInput < SimpleForm::Inputs::Base
   end
 
   def send_image_text
-    I18n.t('simple_form_image_fields.single_resizable_file.send_image')
+    I18n.t('simple_form_image_field.single_resizable_file.send_image')
   end
 
   def input_infos_name
@@ -101,7 +101,7 @@ class SingleResizableFileInput < SimpleForm::Inputs::Base
   end
 
   def delete_image_text
-    I18n.t('simple_form_image_fields.single_resizable_file.delete_image')
+    I18n.t('simple_form_image_field.single_resizable_file.delete_image')
   end
 
   def file_instance
