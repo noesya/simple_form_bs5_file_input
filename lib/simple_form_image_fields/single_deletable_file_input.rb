@@ -55,6 +55,10 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     'Choisir un fichier'
   end
 
+  def default_label_text
+    I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
+  end
+
   def input_file_name
       "#{@builder.object_name}[#{attribute_name}]"
   end
