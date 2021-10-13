@@ -1,7 +1,51 @@
-.custom-file
-    input
-        cursor: pointer
-        overflow: hidden
+.sdfi-deletable-file
+    position: relative
+
+    // input
+    //     cursor: pointer
+    //     overflow: hidden
+
+    &__block
+        display: none
+        padding: 0
+
+        .btn
+            // background-color: var(--bs-gray-200)
+            // border: 0
+            // border-bottom-right-radius: 0
+            // border-top-right-radius: 0
+            // border-right: 1px solid var(--bs-gray-400)
+            // color: var(--bs-dark)
+            // // not sure why we need a margin here
+            // margin-top: -2px
+            padding: $input-padding-y $input-padding-x
+            margin: (-$input-padding-y) (-$input-padding-x)
+            margin-inline-end: $input-padding-x
+            color: $form-file-button-color
+            @include gradient-bg($form-file-button-bg)
+            pointer-events: none
+            border-color: inherit
+            border-style: solid
+            border-width: 0
+            border-inline-end-width: $input-border-width
+            border-radius: 0
+            @include transition($btn-transition)
+
+
+
+        .sdfi-deletable-file__label
+            padding: .25rem 2.1rem .25rem .7rem
+
+        &.is-valid
+            .btn
+                border-right-color: var(--bs-green)
+
+    &--with-file
+        input[type='file']
+            display: none
+
+        .sdfi-deletable-file__block
+            display: block
 
     &__uploading
         .custom-file-label
@@ -25,19 +69,10 @@
     max-width: 200px
     width: auto
 
-.custom-file-label
-    border: 0
-    border-radius: 0
-    margin: 1px
-    overflow: hidden
-    pointer-events: none
-
-    &::after
-        border-radius: 0
-        height: 2.25rem
 
 .custom-file-background
     background-color: white
+    border-radius: .2rem
     bottom: 1px
     display: none
     left: 1px

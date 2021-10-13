@@ -4,20 +4,32 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   include ActionView::Helpers::AssetTagHelper
 
   def input(wrapper_options = nil)
-    format('%s<div class="custom-file">
-    %s
-    <div class="custom-file-background"></div>
-    <div class="custom-file-upload_progress"></div>
-    <label for="%s" class="custom-file-label" data-default="%s">%s</label>
-    <button class="btn custom-file-delete %s" type="button">%s</button>
-    <input type="hidden" name="%s" class="custom-file-delete-field" %s />
-    </div>', preview, input_field(wrapper_options), field_id, default_label_text, existing_file_name_or_default_text, is_button_hidden, I18n.t('simple_form_image_fields.single_deletable_file.delete'), input_hidden_name, input_hidden_value)
+    format('
+      %s
+      <div class="sdfi-deletable-file %s">
+        %s
+        <div class="%s">
+          <button type="button" class="btn">%s</button>
+          <label for="%s" class="sdfi-deletable-file__label">
+            %s
+          </label>
+          <div class="custom-file-background"></div>
+          <div class="custom-file-upload_progress"></div>
+          <button class="btn custom-file-delete %s" type="button">%s</button>
+          <input type="hidden" name="%s" class="custom-file-delete-field" %s />
+        </div>
+      </div>
+    ', preview_div, has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, is_button_hidden, I18n.t('simple_form_image_fields.single_deletable_file.delete'), input_hidden_name, input_hidden_value)
   end
 
-  def preview
+  def preview_div
     if options[:display_preview]
       format('<div class="preview">%s</div>', preview_image_tag)
     end
+  end
+
+  def has_file_class
+    'sdfi-deletable-file--with-file' if should_display_file?
   end
 
   def input_field(wrapper_options)
@@ -29,12 +41,18 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     @builder.file_field(attribute_name, merged_input_options)
   end
 
+  def field_classes(wrapper_options)
+    # "form-control is-valid single_deletable_file optional"
+    "sdfi-deletable-file__block #{merge_wrapper_options(input_html_options, wrapper_options)[:class].join(' ')}"
+  end
+
   def field_id
     "#{object_name}_#{reflection_or_attribute_name}"
   end
 
-  def default_label_text
-    I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
+  def change_file_text
+    # I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
+    'Choisir un fichier'
   end
 
   def input_file_name
@@ -72,6 +90,8 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   def file_attachment
     @builder.object.send("#{attribute_name}_attachment")
   end
+
+
 
   def should_display_file?
     file_attachment.present?
