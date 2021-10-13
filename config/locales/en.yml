@@ -1,8 +1,7 @@
 en:
   simple_form_image_fields:
     single_deletable_file:
-      choose_file: 'Choose file...'
-      delete: 'Delete'
+      replace_file: 'Change the file'
     single_resizable_file:
       change_image: 'Change image'
       delete_image: 'Delete image'

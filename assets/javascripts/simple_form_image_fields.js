@@ -2,48 +2,53 @@
 window.inputSingleDeletableFile = {
     onDelete: function (e) {
         'use strict';
+        var scope = $(this).parents('.js-sdfi-deletable-file');
         e.preventDefault();
         e.stopPropagation();
-        var scope = $(this).parents('.single_deletable_file'),
-            label_field = $('.custom-file-label', scope);
-        $('.custom-file-delete-field', scope).val('true');
+        $('.js-sdfi-deletable-file__hidden-field', scope).val('true');
         $('input[type="file"]', scope).val('');
-        label_field.removeClass('selected').html(label_field.data('default'));
-        $(this).addClass('d-none');
-        $('.custom-file-preview', scope).hide();
+        scope.removeClass('sdfi-deletable-file--with-file');
+        // $('.custom-file-preview', scope).hide();
     },
 
     onChange: function () {
         'use strict';
-        var scope = $(this).parents('.single_deletable_file'),
-            file_name = $(this).val().split('\\').pop(),
-            has_preview = ($('.custom-file-preview', scope).length > 0);
-        if (file_name !== '' && file_name !== undefined) {
-            $('.custom-file-label', scope).addClass('selected').html(file_name);
-            $('.custom-file-delete', scope).removeClass('d-none');
-            $('.custom-file-delete-field', scope).val('');
+        var scope = $(this).parents('.js-sdfi-deletable-file'),
+            fileName = $(this).val()
+                .split('\\')
+                .pop(),
+            hasPreview = $('.js-sdfi-deletable-file__preview', scope).length > 0,
+            reader,
+            size;
+        if (fileName !== '') {
+            scope.addClass('sdfi-deletable-file--with-file');
+            $('.js-sdfi-deletable-file__label', scope).html(fileName);
+            $('.js-sdfi-deletable-file__hidden-field', scope).val('');
         }
         // preview
-        if (has_preview && this.files && this.files[0]) {
-           var reader = new FileReader();
-           reader.onload = function (e) {
-               $('.custom-file-preview', scope).attr('src', e.target.result);
-               $('.custom-file-preview', scope).show();
-           }
-           reader.readAsDataURL(this.files[0]);
+        if (hasPreview && this.files && this.files[0]) {
+            size = $('.js-sdfi-deletable-file__preview', scope).attr('data-size').split('x');
+            reader = new FileReader();
+            reader.onload = function (e) {
+                $('.js-sdfi-deletable-file__preview', scope).html('<img src="' + e.target.result + '" width="' + size[0] + '" height="auto">');
+            };
+            reader.readAsDataURL(this.files[0]);
         }
     },
 
     bindEvents: function (field) {
         'use strict';
-        $('.custom-file-delete', $(field)).on('click', this.onDelete);
+        $('.js-sdfi-deletable-file__change-btn', $(field)).on('click', function () {
+            $('input[type="file"]', $(field)).click();
+        });
+        $('.js-sdfi-deletable-file__delete-btn', $(field)).on('click', this.onDelete);
         $('input[type="file"]', $(field)).on('change', this.onChange);
     }
 };
 
 $(document).ready(function () {
     'use strict';
-    $('.custom-file').each(function () {
+    $('.js-sdfi-deletable-file').each(function () {
         window.inputSingleDeletableFile.bindEvents(this);
     });
 });

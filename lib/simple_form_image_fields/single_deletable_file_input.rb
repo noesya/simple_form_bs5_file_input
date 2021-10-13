@@ -2,29 +2,29 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   delegate :url_helpers, to: 'Rails.application.routes'
 
   include ActionView::Helpers::AssetTagHelper
+  include ActionDispatch::Routing::PolymorphicRoutes
 
   def input(wrapper_options = nil)
     format('
-      %s
-      <div class="sdfi-deletable-file %s">
+      <div class="sdfi-deletable-file js-sdfi-deletable-file %s">
+        %s
         %s
         <div class="%s">
-          <button type="button" class="btn">%s</button>
-          <label for="%s" class="sdfi-deletable-file__label">
+          <button type="button" class="btn js-sdfi-deletable-file__change-btn">%s</button>
+          <label for="%s" class="sdfi-deletable-file__label js-sdfi-deletable-file__label">
             %s
           </label>
-          <div class="custom-file-background"></div>
-          <div class="custom-file-upload_progress"></div>
-          <button class="btn custom-file-delete %s" type="button">%s</button>
-          <input type="hidden" name="%s" class="custom-file-delete-field" %s />
+          <div class="sdfi-deletable-file__delete-btn js-sdfi-deletable-file__delete-btn"></div>
+          <div class="sdfi-deletable-file__upload-progress"></div>
+          <input type="hidden" name="%s" class="js-sdfi-deletable-file__hidden-field" %s />
         </div>
       </div>
-    ', preview_div, has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, is_button_hidden, I18n.t('simple_form_image_fields.single_deletable_file.delete'), input_hidden_name, input_hidden_value)
+    ', has_file_class, preview_div, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value)
   end
 
   def preview_div
-    if options[:display_preview]
-      format('<div class="preview">%s</div>', preview_image_tag)
+    if options[:preview]
+      format('<div class="sdfi-deletable-file__preview js-sdfi-deletable-file__preview" data-size="%s">%s</div>', options[:preview], preview_image_tag(options[:preview]))
     end
   end
 
@@ -46,21 +46,12 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     "sdfi-deletable-file__block #{merge_wrapper_options(input_html_options, wrapper_options)[:class].join(' ')}"
   end
 
+  def change_file_text
+    I18n.t('simple_form_image_fields.single_deletable_file.replace_file')
+  end
+
   def field_id
     "#{object_name}_#{reflection_or_attribute_name}"
-  end
-
-  def change_file_text
-    # I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
-    'Choisir un fichier'
-  end
-
-  def default_label_text
-    I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
-  end
-
-  def input_file_name
-      "#{@builder.object_name}[#{attribute_name}]"
   end
 
   def existing_file_name_or_default_text
@@ -71,18 +62,6 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     end
   end
 
-  def preview_image_tag
-    if should_display_file? && file_attachment.blob&.variant?
-      image_tag(file_attachment.blob.variant(resize: "200x200").processed.service_url, class: 'custom-file-preview')
-    else
-      '<img src="#" class="custom-file-preview" style="display: none;">'
-    end
-  end
-
-  def is_button_hidden
-    'd-none' unless should_display_file?
-  end
-
   def input_hidden_name
     "#{@builder.object_name}[#{attribute_name.to_s}_delete]"
   end
@@ -91,13 +70,23 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     "value='true'" if @builder.object.send("#{attribute_name}_delete") == 'true'
   end
 
+  private
+
   def file_attachment
     @builder.object.send("#{attribute_name}_attachment")
   end
 
-
-
   def should_display_file?
     file_attachment.present?
+  end
+
+  def default_label_text
+    I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
+  end
+
+  def preview_image_tag(size)
+    if should_display_file? && file_attachment&.variable?
+      image_tag(file_attachment.variant(resize: size).processed.url, class: 'custom-file-preview')
+    end
   end
 end

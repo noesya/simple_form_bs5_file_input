@@ -32,6 +32,10 @@ Add it to your application.js:
 //= require simple_form_image_fields
 ```
 
+### Active Storage
+
+**Simple Form Image Fields** relies on [Active Storage](https://github.com/rails/rails/tree/main/activestorage), so it presumes that you installed Active Storage.
+
 ### Bootstrap
 
 **Simple Form Image Fields** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
@@ -44,38 +48,20 @@ You have to be sure that you added a copy of the [Bootstrap](http://getbootstrap
 assets on your application.
 
 ## Usage
-TODO après ici
-**Simple Form Password Image Fields** comes with two new input types. One is meant to replace the standard `:password` field: `:password_with_hints`. The second one is meant to replace the `:password_confirmation` field: `:password_with_sync`.
+**Simple Form Image Fields** comes with two new input types. One is meant to replace the standard `:file` field: `:single_deletable_file`. The second one allows to resize the image on the fly: `:single_resizable_file`.
 
-To start using **Simple Form Password With Hints** you just have to change the input type of the `:password` / `:password_confirmation` fields.
+To start using **Simple Form Image Fields** you just have to change the input type of the `:file` field to any of those two new kinds..
 
 So basically your field:
 ```erb
-<%= f.input :password %>
+<%= f.input :my_file %>
 ```
 becomes
 ```erb
-<%= f.input :password,
-            as: :password_with_hints,  
-            validators: {
-              length: 6,
-              uppercase_char: true,
-              lowercase_char: true,
-              numeric_char: true,
-              special_char: '#&@?!'
-            } %>
+<%= f.input :my_file,
+            as: :single_deletable_file %>
 ```
-
-and your field
-```erb
-<%= f.input :password_confirmation %>
-```
-becomes
-```erb
-<%= f.input :password_confirmation,
-            as: :password_with_sync,  
-            compare_with_field: :password %>
-  ```
+Of course you can still add the options you want, like for example `input_html: { accept: '.jpg,.jpeg,.png' }`
 
 For both kind of fields you can add an option `allow_password_uncloaking: true` which will add an eye on the right side of the field. Clicking on the eye will toggle the visibility of the password field between stars (******) and text (Mypassword!).
 
