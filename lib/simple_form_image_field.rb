@@ -1,9 +1,7 @@
 require 'has_one_attached_deletable'
-require 'has_one_attached_resizable'
-require 'simple_form_image_fields/single_deletable_file_input'
-require 'simple_form_image_fields/single_resizable_file_input'
+require 'simple_form_image_field/single_deletable_file_input'
 
-module SimpleFormImageFields
+module SimpleFormImageField
   def self.add_paths!
     Sprockets.append_path stylesheets_path
     Sprockets.append_path images_path
@@ -38,5 +36,5 @@ module SimpleFormImageFields
 
 end
 
-SimpleFormImageFields.add_paths!
-SimpleFormImageFields.add_locales!
+SimpleFormImageField.add_paths!
+SimpleFormImageField.add_locales!

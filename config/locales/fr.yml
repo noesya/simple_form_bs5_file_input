@@ -1,11 +1,3 @@
 fr:
-  simple_form_image_fields:
-    single_deletable_file:
-      replace_file: 'Remplacer le fichier'
-    single_resizable_file:
-      change_image: 'Modifier'
-      delete_image: 'Supprimer'
-      modal_close: 'Fermer'
-      modal_title: "Cadrer l'image"
-      modal_validate: 'Valider'
-      send_image: 'Envoyer une image'
+  simple_form_image_field:
+    replace_file: 'Remplacer le fichier'

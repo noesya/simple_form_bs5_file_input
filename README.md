@@ -1,8 +1,8 @@
-# simple_form_image_fields
+# simple_form_image_field
 
-A nice improvement for the image fields in [Simple Form](https://github.com/heartcombo/simple_form).
+A nice improvement for the image field in [Simple Form](https://github.com/heartcombo/simple_form).
 
-**Simple Form Image Fields** aims to add directs controls to your image fields in Simple Form.
+**Simple Form Image Field** aims to add directs controls to your image fields in Simple Form.
 
 
 
@@ -11,7 +11,7 @@ A nice improvement for the image fields in [Simple Form](https://github.com/hear
 Add it to your Gemfile:
 
 ```ruby
-gem 'simple_form_image_fields'
+gem 'simple_form_image_field'
 ```
 
 Run the following command to install it:
@@ -23,22 +23,22 @@ bundle install
 Add it to your application.sass:
 
 ```
-@import 'simple_form_image_fields'
+@import 'simple_form_image_field'
 ```
 
 Add it to your application.js:
 
 ```
-//= require simple_form_image_fields
+//= require simple_form_image_field
 ```
 
 ### Active Storage
 
-**Simple Form Image Fields** relies on [Active Storage](https://github.com/rails/rails/tree/main/activestorage), so it presumes that you installed Active Storage.
+**Simple Form Image Field** relies on [Active Storage](https://github.com/rails/rails/tree/main/activestorage), so it presumes that you installed Active Storage.
 
 ### Bootstrap
 
-**Simple Form Image Fields** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
+**Simple Form Image Field** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
 
 ```console
 rails generate simple_form:install --bootstrap
@@ -48,9 +48,9 @@ You have to be sure that you added a copy of the [Bootstrap](http://getbootstrap
 assets on your application.
 
 ## Usage
-**Simple Form Image Fields** comes with two new input types. One is meant to replace the standard `:file` field: `:single_deletable_file`. The second one allows to resize the image on the fly: `:single_resizable_file`.
+**Simple Form Image Field** comes with one new input type which is meant to replace the standard `:file` field: `:single_deletable_file`
 
-To start using **Simple Form Image Fields** you just have to change the input type of the `:file` field to any of those two new kinds..
+To start using **Simple Form Image Field** you just have to change the input type of the `:file` field to these new kind.
 
 So basically your field:
 ```erb
@@ -63,6 +63,7 @@ becomes
 ```
 Of course you can still add the options you want, like for example `input_html: { accept: '.jpg,.jpeg,.png' }`
 
+# TODO
 For both kind of fields you can add an option `allow_password_uncloaking: true` which will add an eye on the right side of the field. Clicking on the eye will toggle the visibility of the password field between stars (******) and text (Mypassword!).
 
 Of course you can add every other current option to your fields.

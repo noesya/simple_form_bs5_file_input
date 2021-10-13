@@ -47,7 +47,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def change_file_text
-    I18n.t('simple_form_image_fields.single_deletable_file.replace_file')
+    I18n.t('simple_form_image_field.replace_file')
   end
 
   def field_id
@@ -57,8 +57,6 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   def existing_file_name_or_default_text
     if should_display_file?
       "#{file_attachment.filename}"
-    else
-      default_label_text
     end
   end
 
@@ -78,10 +76,6 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def should_display_file?
     file_attachment.present?
-  end
-
-  def default_label_text
-    I18n.t('simple_form_image_fields.single_deletable_file.choose_file')
   end
 
   def preview_image_tag(size)
