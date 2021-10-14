@@ -1,11 +1,11 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "simple_form_image_field/version"
+require "simple_form_bs5_file_input/version"
 
 Gem::Specification.new do |s|
-  s.name        = 'simple_form_image_field'
-  s.version     = SimpleFormImageField::VERSION
-  s.summary     = "Simple Form Image Field"
+  s.name        = 'simple_form_bs5_file_input'
+  s.version     = SimpleFormBs5FileInput::VERSION
+  s.summary     = "Simple Form BS5 File Input"
   s.description = "Improve Simple Form basic input field, add controls/preview on the field."
   s.authors     = ["Pierre-andré Boissinot"]
   s.email       = 'pa@boissinot.paris'
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   end
   s.require_paths = ['lib']
   s.homepage    =
-    'https://github.com/noesya/simple_form_image_field'
+    'https://github.com/noesya/simple_form_bs5_file_input'
   s.license       = 'MIT'
 
   s.add_dependency "rails"

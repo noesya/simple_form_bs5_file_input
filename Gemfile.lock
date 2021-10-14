@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_form_image_field (0.0.1)
+    simple_form_bs5_file_input (0.0.1)
       rails
       simple_form
 
@@ -195,7 +195,7 @@ DEPENDENCIES
   listen
   pg (~> 1.1)
   simple_form
-  simple_form_image_field!
+  simple_form_bs5_file_input!
   sqlite3
 
 BUNDLED WITH

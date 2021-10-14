@@ -1,8 +1,8 @@
-# simple_form_image_field
+# simple_form_bs5_file_input
 
 A nice improvement for the image field in [Simple Form](https://github.com/heartcombo/simple_form).
 
-**Simple Form Image Field** aims to add directs controls to your image fields in Simple Form.
+**Simple Form Bootstrap 5 File Input** aims to add directs controls to your image fields in Simple Form.
 
 
 
@@ -11,7 +11,7 @@ A nice improvement for the image field in [Simple Form](https://github.com/heart
 Add it to your Gemfile:
 
 ```ruby
-gem 'simple_form_image_field'
+gem 'simple_form_bs5_file_input'
 ```
 
 Run the following command to install it:
@@ -23,22 +23,22 @@ bundle install
 Add it to your application.sass:
 
 ```
-@import 'simple_form_image_field'
+@import 'simple_form_bs5_file_input'
 ```
 
 Add it to your application.js:
 
 ```
-//= require simple_form_image_field
+//= require simple_form_bs5_file_input
 ```
 
 ### Active Storage
 
-**Simple Form Image Field** relies on [Active Storage](https://github.com/rails/rails/tree/main/activestorage), so it presumes that you installed Active Storage.
+**Simple Form Bootstrap 5 File Input** relies on [Active Storage](https://github.com/rails/rails/tree/main/activestorage), so it presumes that you installed Active Storage.
 
 ### Bootstrap
 
-**Simple Form Image Field** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
+**Simple Form Bootstrap 5 File Input** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
 
 ```console
 rails generate simple_form:install --bootstrap
@@ -48,9 +48,9 @@ You have to be sure that you added a copy of the [Bootstrap](http://getbootstrap
 assets on your application.
 
 ## Usage
-**Simple Form Image Field** comes with one new input type which is meant to replace the standard `:file` field: `:single_deletable_file`
+**Simple Form Bootstrap 5 File Input** comes with one new input type which is meant to replace the standard `:file` field: `:single_deletable_file`
 
-To start using **Simple Form Image Field** you just have to change the input type of the `:file` field to these new kind.
+To start using **Simple Form Bootstrap 5 File Input** you just have to change the input type of the `:file` field to these new kind.
 
 So basically your field:
 ```erb

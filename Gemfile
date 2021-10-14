@@ -4,7 +4,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'simple_form'
 
-# Specify your gem's dependencies in simple_form_image_field.gemspec
+# Specify your gem's dependencies in simple_form_bs5_file_input.gemspec
 gemspec
 
 gem 'pg', '~> 1.1'

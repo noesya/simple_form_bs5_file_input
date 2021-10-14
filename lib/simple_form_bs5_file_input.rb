@@ -1,7 +1,7 @@
 require 'has_one_attached_deletable'
-require 'simple_form_image_field/single_deletable_file_input'
+require 'simple_form_bs5_file_input/single_deletable_file_input'
 
-module SimpleFormImageField
+module SimpleFormBs5FileInput
   def self.add_paths!
     Sprockets.append_path stylesheets_path
     Sprockets.append_path images_path
@@ -36,5 +36,5 @@ module SimpleFormImageField
 
 end
 
-SimpleFormImageField.add_paths!
-SimpleFormImageField.add_locales!
+SimpleFormBs5FileInput.add_paths!
+SimpleFormBs5FileInput.add_locales!

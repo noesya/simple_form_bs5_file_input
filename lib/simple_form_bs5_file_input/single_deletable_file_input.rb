@@ -47,7 +47,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def change_file_text
-    I18n.t('simple_form_image_field.replace_file')
+    I18n.t('simple_form_bs5_file_input.replace_file')
   end
 
   def field_id
