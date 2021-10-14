@@ -61,8 +61,10 @@ window.addEventListener('direct-upload:initialize', function (event) {
     'use strict';
     var target = event.target,
         $scope = $(target).parents('.js-sdfi-deletable-file');
-    $('.sdfi-deletable-file__upload-progress', $scope).css('width', '0%');
-    $scope.addClass('sdfi-deletable-file--uploading');
+    if ($scope.length > 0) {
+        $('.sdfi-deletable-file__upload-progress', $scope).css('width', '0%');
+        $scope.addClass('sdfi-deletable-file--uploading');
+    }
 });
 
 window.addEventListener('direct-upload:progress', function (event) {
@@ -70,7 +72,9 @@ window.addEventListener('direct-upload:progress', function (event) {
     var target = event.target,
         progress = event.detail.progress,
         $scope = $(target).parents('.js-sdfi-deletable-file');
-    $('.sdfi-deletable-file__upload-progress', $scope).css('width', progress + '%');
+    if ($scope.length > 0) {
+        $('.sdfi-deletable-file__upload-progress', $scope).css('width', progress + '%');
+    }
 });
 
 window.addEventListener('direct-upload:error', function (event) {
@@ -78,8 +82,10 @@ window.addEventListener('direct-upload:error', function (event) {
     var target = event.target,
         error = event.detail.error,
         $scope = $(target).parents('.js-sdfi-deletable-file');
-    event.preventDefault();
-    $('.sdfi-deletable-file__upload-progress', $scope).css('width', '0%');
-    $scope.removeClass('sdfi-deletable-file--uploading');
-    alert(error);
+    if ($scope.length > 0) {
+        event.preventDefault();
+        $('.sdfi-deletable-file__upload-progress', $scope).css('width', '0%');
+        $scope.removeClass('sdfi-deletable-file--uploading');
+        alert(error);
+    }
 });
