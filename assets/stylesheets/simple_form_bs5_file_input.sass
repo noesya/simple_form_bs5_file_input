@@ -8,6 +8,7 @@
     &__block
         display: none
         padding: 0
+        position: relative
 
         .btn
             @include gradient-bg($form-file-button-bg)
@@ -41,12 +42,30 @@
         background-image: asset-url('icon-cancel.svg')
         background-position: center
         background-repeat: no-repeat
-        background-size: contain
+        background-size: .9em
         cursor: pointer
-        height: calc(0.75em + 0.375rem)
+        flex-shrink: 0
+        height: 1.5rem
         margin-right: .7rem
         margin-top: 1px
         width: calc(0.75em + 0.375rem)
+
+    &__upload-background, &__upload-progress
+        border-radius: .2rem
+        display: none
+        height: 100%
+        left: 0
+        position: absolute
+        top: 0
+
+    &__upload-background
+        background-color: #FFFFFF
+        width: 100%
+
+    &__upload-progress
+        background-color: #E0E0E0
+        pointer-events: none
+        width: 0%
 
     &--with-file
         input[type='file']
@@ -58,40 +77,6 @@
         .sdfi-deletable-file__block
             display: flex
 
-    // &__uploading
-    //     .custom-file-label
-    //         background-color: transparent
-    //         &::after
-    //             display: none
-    //     .custom-file-delete
-    //         display: none
-    //     .custom-file-background,
-    //     .custom-file-upload_progress
-    //         display: block
-    //
-    //     .form-control:disabled
-    //         background-color: white
-
-
-//
-//
-// .custom-file-background
-//     background-color: white
-//     border-radius: .2rem
-//     bottom: 1px
-//     display: none
-//     left: 1px
-//     pointer-events: none
-//     position: absolute
-//     right: 1px
-//     top: 1px
-//
-// .custom-file-upload_progress
-//     background-color: #E0E0E0
-//     display: none
-//     height: 100%
-//     left: 0
-//     pointer-events: none
-//     position: absolute
-//     top: 1px
-//     width: 0%
+    &--uploading
+        .sdfi-deletable-file__upload-background, .sdfi-deletable-file__upload-progress
+            display: block

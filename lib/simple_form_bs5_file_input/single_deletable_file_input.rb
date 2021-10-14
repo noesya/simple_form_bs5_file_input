@@ -14,6 +14,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
             %s
           </label>
           <div class="sdfi-deletable-file__delete-btn js-sdfi-deletable-file__delete-btn"></div>
+          <div class="sdfi-deletable-file__upload-background"></div>
           <div class="sdfi-deletable-file__upload-progress"></div>
           <input type="hidden" name="%s" class="js-sdfi-deletable-file__hidden-field" %s />
         </div>
@@ -24,7 +25,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def preview_div
     if options[:preview]
-      format('<div class="sdfi-deletable-file__preview js-sdfi-deletable-file__preview" data-size="%s">%s</div>', options[:preview], preview_image_tag(options[:preview]))
+      format('<div class="sdfi-deletable-file__preview js-sdfi-deletable-file__preview" data-size="%s">%s</div>', preview_image_width, preview_image_tag)
     end
   end
 
@@ -78,9 +79,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     file_attachment.present?
   end
 
-  def preview_image_tag(size)
+  def preview_image_width
+    options[:preview] == true ? default_preview_image_width : options[:preview].to_i
+  end
+
+  def preview_image_tag
     if should_display_file? && file_attachment&.variable?
-      image_tag(file_attachment.variant(resize: size).processed.url, class: 'custom-file-preview')
+      image_tag(file_attachment.variant(resize: "#{preview_image_width}x").processed.url, class: 'img-fluid img-thumbnail', width: preview_image_width)
     end
+  end
+
+  def default_preview_image_width
+    1000
   end
 end
