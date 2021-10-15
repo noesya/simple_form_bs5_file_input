@@ -62,11 +62,35 @@ becomes
 ```
 Of course you can still add the options you want, like for example `input_html: { accept: '.jpg,.jpeg,.png' }`
 
-You can also add a direct preview (WARNING: preview can only work with images!) by using `preview: true` or any custom width for the preview: `preview: 500`. If you don't specify the preview size it will be 1000px witdh by default.
+You can also add a direct preview (WARNING: preview can only work with images!) by using `preview: true` or any custom width for the preview: `preview: 500`. If you don't specify the preview size it will be 1000px width by default.
 Note that the preview uses the boostrap classes `img-fluid` and `img-thumbnail`.
 
+### Model
+You also have to change the type of you file in your model.
+So instead of declaring:
+```
+has_one_attached :picture
+```
 
-### Direct upload
+you will have to declare:
+```
+has_one_attached_deletable :picture
+```
+
+### Controller
+If you use strict parameters you will need to allow the `:[filename]_delete` and the `:[filename]_infos` params in the controller.
+So instead of:
+```
+params.require(:user).permit(:first_name, :last_name, :picture)
+```
+you will have:
+```
+params.require(:user).permit(:first_name, :last_name, :picture, :picture_delete, :picture_infos)
+```
+
+That's all folks!
+
+## Direct upload
 
 The new field is still compatible with the `direct_upload` param.
 ```erb
