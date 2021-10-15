@@ -19,14 +19,9 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
           <input type="hidden" name="%s" class="js-sdfi-deletable-file__hidden-field" %s />
         </div>
         %s
+        %s
       </div>
-    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value, preview_div)
-  end
-
-  def preview_div
-    if options[:preview]
-      format('<div class="sdfi-deletable-file__preview js-sdfi-deletable-file__preview" data-size="%s">%s</div>', preview_image_width, preview_image_tag)
-    end
+    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value, preview_div, resize_div)
   end
 
   def has_file_class
@@ -69,6 +64,43 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     "value='true'" if @builder.object.send("#{attribute_name}_delete") == 'true'
   end
 
+  def preview_div
+    if options[:preview]
+      format('<div class="sdfi-deletable-file__preview js-sdfi-deletable-file__preview" data-size="%s">%s</div>', preview_image_width, preview_image_tag)
+    end
+  end
+
+  def resize_div
+    if options[:resize]
+      format('<div id="exampleModal" class="sdfi-deletable-file__resize js-sdfi-deletable-file__resize modal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">%s</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="%s"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="img-container image-crop">
+
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">%s</button>
+                      <button type="button" class="btn btn-sm btn-primary">%s</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+              </button>
+
+              ', modal_title, close_btn_text, close_btn_text, validate_btn_text)
+    end
+  end
+
   private
 
   def file_attachment
@@ -91,5 +123,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def default_preview_image_width
     1000
+  end
+
+  def modal_title
+    I18n.t('simple_form_bs5_file_input.modal_title')
+  end
+
+  def close_btn_text
+    I18n.t('simple_form_bs5_file_input.modal_close')
+  end
+
+  def validate_btn_text
+    I18n.t('simple_form_bs5_file_input.modal_validate')
   end
 end

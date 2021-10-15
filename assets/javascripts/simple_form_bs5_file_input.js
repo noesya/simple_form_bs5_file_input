@@ -1,4 +1,4 @@
-/*global $, document, window */
+/*global $, document, window, bootstrap */
 window.inputSingleDeletableFile = {
     onDelete: function (e) {
         'use strict';
@@ -14,27 +14,60 @@ window.inputSingleDeletableFile = {
     onChange: function () {
         'use strict';
         var $scope = $(this).parents('.js-sdfi-deletable-file'),
-            fileName = $(this).val()
-                .split('\\')
-                .pop(),
+            $resizeModal = $('.js-sdfi-deletable-file__resize', $scope),
+            files = this.files,
+            file,
+            fileName,
             hasPreview = $('.js-sdfi-deletable-file__preview', $scope).length > 0,
+            hasResize = $resizeModal.length > 0,
+            modal,
             reader,
             size;
-        if (fileName !== '') {
-            $scope.addClass('sdfi-deletable-file--with-file');
-            $('.js-sdfi-deletable-file__label', $scope).html(fileName);
-            $('.js-sdfi-deletable-file__hidden-field', $scope).val('');
+
+        if (!files.length) {
+            return;
         }
-        // preview
-        if (hasPreview && this.files && this.files[0]) {
-            size = $('.js-sdfi-deletable-file__preview', $scope).attr('data-size')
-                .split('x');
+
+        file = files[0];
+
+        fileName = $(this).val()
+            .split('\\')
+            .pop();
+
+        $scope.addClass('sdfi-deletable-file--with-file');
+        $('.js-sdfi-deletable-file__label', $scope).html(fileName);
+        $('.js-sdfi-deletable-file__hidden-field', $scope).val('');
+
+        if (/^image\/\w+$/.test(file.type)) {
             reader = new FileReader();
-            reader.onload = function (e) {
-                $('.js-sdfi-deletable-file__preview', $scope).html('<img src="' + e.target.result + '" width="' + size[0] + '" height="auto" class="img-fluid img-thumbnail">');
-            };
-            reader.readAsDataURL(this.files[0]);
+            reader.readAsDataURL(file);
+            if (hasResize) {
+                reader.onload = function () {
+                    $resizeModal.attr('data-image-result', this.result);
+                    modal = new bootstrap.Modal($resizeModal, {
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    modal.show();
+                };
+            } else if (hasPreview) {
+                size = $('.js-sdfi-deletable-file__preview', $scope).attr('data-size')
+                    .split('x');
+                reader.onload = function (e) {
+                    $('.js-sdfi-deletable-file__preview', $scope).html('<img src="' + e.target.result + '" width="' + size[0] + '" height="auto" class="img-fluid img-thumbnail">');
+                };
+            }
         }
+    },
+
+    onResizeModalShown: function (e) {
+        'use strict';
+        console.log('modal show', e);
+    },
+
+    onResizeModalHidden: function (e) {
+        'use strict';
+        console.log('modal hide', e);
     },
 
     bindEvents: function (field) {
@@ -45,6 +78,9 @@ window.inputSingleDeletableFile = {
         });
         $('.js-sdfi-deletable-file__delete-btn', $(field)).on('click', this.onDelete);
         $('input[type="file"]', $(field)).on('change', this.onChange);
+
+        $('.js-sdfi-deletable-file__resize', field).on('shown.bs.modal', this.onResizeModalShown);
+        $('.js-sdfi-deletable-file__resize', field).on('hidden.bs.modal', this.onResizeModalHidden);
     }
 };
 

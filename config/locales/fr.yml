@@ -1,3 +1,6 @@
 fr:
   simple_form_bs5_file_input:
-    replace_file: 'Remplacer le fichier'
+    modal_close: Fermer
+    modal_title: Cadrer l'image
+    modal_validate: Valider
+    replace_file: Remplacer le fichier

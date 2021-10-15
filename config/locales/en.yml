@@ -1,3 +1,6 @@
 en:
   simple_form_bs5_file_input:
+    modal_close: Close
+    modal_title: Resize the image
+    modal_validate: Validate  
     replace_file: 'Change the file'
