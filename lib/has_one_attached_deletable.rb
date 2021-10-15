@@ -14,6 +14,7 @@ class ActiveRecord::Base
       define_method :"resize_#{name}" do
         return unless send(name).attached?
 
+
         params = JSON(send("#{name}_infos"))
         # reset the infos to prevent multiple resize if multiple save
         instance_variable_set :"@#{name}_infos", nil
@@ -30,7 +31,7 @@ class ActiveRecord::Base
         variant = Rails::VERSION::MAJOR >= 6  ? send(name).variant(**transformations)
                                               : send(name).variant(combine_options: transformations)
 
-        variant_url = variant.processed.service_url
+        variant_url = variant.processed.url
         downloaded_image = URI.open(variant_url)
         attachable = { io: downloaded_image, filename: send(name).filename.to_s }
 

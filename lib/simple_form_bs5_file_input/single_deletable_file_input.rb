@@ -16,12 +16,13 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
           <div class="sdfi-deletable-file__delete-btn js-sdfi-deletable-file__delete-btn"></div>
           <div class="sdfi-deletable-file__upload-background"></div>
           <div class="sdfi-deletable-file__upload-progress"></div>
-          <input type="hidden" name="%s" class="js-sdfi-deletable-file__hidden-field" %s />
+          <input type="hidden" name="%s" class="js-sdfi-deletable-file__infos-field" %s />
+          <input type="hidden" name="%s" class="js-sdfi-deletable-file__delete-field" %s />
         </div>
         %s
         %s
       </div>
-    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_hidden_name, input_hidden_value, preview_div, resize_div)
+    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_infos_name, input_infos_value, input_delete_name, input_delete_value, preview_div, resize_div)
   end
 
   def has_file_class
@@ -56,12 +57,20 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     end
   end
 
-  def input_hidden_name
+  def input_delete_name
     "#{@builder.object_name}[#{attribute_name.to_s}_delete]"
   end
 
-  def input_hidden_value
+  def input_delete_value
     "value='true'" if @builder.object.send("#{attribute_name}_delete") == 'true'
+  end
+
+  def input_infos_name
+    "#{@builder.object_name}[#{attribute_name.to_s}_infos]"
+  end
+
+  def input_infos_value
+    "value='#{@builder.object.send("#{attribute_name}_infos")}'" if @builder.object.send("#{attribute_name}_infos")
   end
 
   def preview_div
@@ -72,32 +81,25 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def resize_div
     if options[:resize]
-      format('<div id="exampleModal" class="sdfi-deletable-file__resize js-sdfi-deletable-file__resize modal" tabindex="-1">
+      format('<div class="sdfi-deletable-file__resize js-sdfi-deletable-file__resize modal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title">%s</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="%s"></button>
+                      <button type="button" class="btn-close js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal" aria-label="%s"></button>
                     </div>
                     <div class="modal-body">
-                      <div class="img-container image-crop">
+                      <div class="sdfi-sdfi-deletable-file__resize-image js-sdfi-sdfi-deletable-file__resize-image" data-ratio="%s">
 
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">%s</button>
-                      <button type="button" class="btn btn-sm btn-primary">%s</button>
+                      <button type="button" class="btn btn-sm btn-secondary js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal">%s</button>
+                      <button type="button" class="btn btn-sm btn-primary js-sdfi-deletable-file__resize-validate">%s</button>
                     </div>
                   </div>
                 </div>
-              </div>
-
-
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
-              </button>
-
-              ', modal_title, close_btn_text, close_btn_text, validate_btn_text)
+              </div>', modal_title, close_btn_text, resize_ratio, close_btn_text, validate_btn_text)
     end
   end
 
@@ -113,6 +115,10 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def preview_image_width
     options[:preview] == true ? default_preview_image_width : options[:preview].to_i
+  end
+
+  def resize_ratio
+    options[:resize] == true ? '' : options[:resize]
   end
 
   def preview_image_tag
