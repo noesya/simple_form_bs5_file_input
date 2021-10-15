@@ -107,20 +107,20 @@ You can add an option to the field to resize the image after upload (of course i
 
 Add `resize: true` to your field.
 
-You can also specify a ratio for the cropper. For example `resize: 1` will lock to aspect ratio to a square. Beware of the float constraints in rails. If you want a 4/3 ratio use `resize: 4/3.to_f` as 4/3 gives 1 in rails.
+You can also specify a ratio for the cropper. For example `resize: 1` will lock the aspect ratio to a square. Beware of the float constraints in rails. If you want a 4/3 ratio use `resize: 4/3.to_f` as 4/3 otherwise gives 1.
 
 
-The resizer is based on [CropperJS](https://github.com/fengyuanchen/cropperjs) so you have to add cropper and jquery-cropper to your dependencies.
+The resizer is based on [CropperJS](https://github.com/fengyuanchen/cropperjs) so you have to add cropper and jquery-cropper to your dependencies:
 ```
 yarn add cropperjs
 yarn add jquery-cropper
 ```
-then include the js files in your application.js file
+then include the js files in your application.js file:
 ```
 //= require cropperjs/dist/cropper
 //= require jquery-cropper/dist/jquery-cropper
 ```
-and include the css in your application.sass file
+and include the css in your application.sass file:
 ```
 @import 'cropperjs/dist/cropper'
 ```
