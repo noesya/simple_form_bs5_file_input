@@ -104,7 +104,9 @@ Direct upload will send the file BEFORE the page submission. You will get a prog
 ## Resize
 
 You can add an option to the field to resize the image after upload (of course it has to be an image!).
+
 Add `resize: true` to your field.
+
 You can also specify a ratio for the cropper. For example `resize: 1` will lock to aspect ratio to a square. Beware of the float constraints in rails. If you want a 4/3 ratio use `resize: 4/3.to_f` as 4/3 gives 1 in rails.
 
 
