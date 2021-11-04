@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_form_bs5_file_input (0.0.3)
+    simple_form_bs5_file_input (0.0.4)
       rails
       simple_form
 
