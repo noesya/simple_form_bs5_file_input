@@ -125,6 +125,15 @@ and include the css in your application.sass file:
 @import 'cropperjs/dist/cropper'
 ```
 
+In your `config/application.yml`, to support `+repage`, you have to add `+` method in supported operations.
+```ruby
+module MyApp
+  class Application < Rails::Application
+    # ...
+    config.active_storage.supported_image_processing_methods = ["+"]
+  end
+end
+```
 
 ## I18n
 
