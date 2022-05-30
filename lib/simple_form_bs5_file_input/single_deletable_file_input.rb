@@ -52,9 +52,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def existing_file_name_or_default_text
-    if should_display_file?
-      "#{file_attachment.filename}"
-    end
+    "#{file_attachment.filename}" if should_display_file?
   end
 
   def input_delete_name
@@ -122,7 +120,10 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def preview_image_tag
-    return unless should_display_file? || file_attachment&.variable?
+    # Pas de fichier, pas de chocolat
+    return unless should_display_file?
+    # Fichier invariable, pas de chocolat non plus
+    return unless file_attachment&.variable?
     variant = file_attachment.variant(resize: "#{preview_image_width}x")
     path = url_helpers.polymorphic_url variant, only_path: true
     image_tag path, class: 'img-fluid img-thumbnail', width: preview_image_width
