@@ -122,9 +122,10 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def preview_image_tag
-    if should_display_file? && file_attachment&.variable?
-      image_tag(file_attachment.variant(resize: "#{preview_image_width}x").processed.url, class: 'img-fluid img-thumbnail', width: preview_image_width)
-    end
+    return unless should_display_file? || file_attachment&.variable?
+    variant = file_attachment.variant(resize: "#{preview_image_width}x")
+    path = url_helpers.polymorphic_url variant, only_path: true
+    image_tag path, class: 'img-fluid img-thumbnail', width: preview_image_width
   end
 
   def default_preview_image_width
