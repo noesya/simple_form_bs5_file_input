@@ -36,7 +36,8 @@ window.inputSingleDeletableFile = {
             $('.js-sdfi-deletable-file__delete-field', $scope).val('');
         }
 
-        if (/^image\/\w+$/.test(file.type) && (hasResize || hasPreview)) {
+
+        if (/^image\/[a-z+]+$/.test(file.type) && (hasResize || hasPreview)) {
             reader = new FileReader();
             reader.readAsDataURL(file);
             if (hasResize) {
