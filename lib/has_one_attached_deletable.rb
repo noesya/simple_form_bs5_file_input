@@ -1,5 +1,5 @@
 class ActiveRecord::Base
-  def self.has_one_attached_deletable(name, **options)
+  def self.has_one_attached_deletable(name, **options, &block)
     class_eval do
       attr_accessor :"#{name}_delete"
       attr_accessor :"#{name}_infos"
@@ -49,6 +49,6 @@ class ActiveRecord::Base
       end
     end
 
-    has_one_attached name, **options
+    has_one_attached name, **options, &block
   end
 end
