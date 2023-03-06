@@ -11,4 +11,3 @@ gem 'pg', '~> 1.1'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'bootstrap'
-gem 'jquery-rails'
