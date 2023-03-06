@@ -6,7 +6,7 @@ window.inputSingleDeletableFile = {
     cropperInstances: [],
     onFileDelete: function (e) {
         'use strict';
-        var scope = this.closest('.js-sdfi-deletable-file')
+        var scope = this.closest('.js-sdfi-deletable-file');
         
         e.preventDefault();
         e.stopPropagation();
@@ -28,7 +28,6 @@ window.inputSingleDeletableFile = {
             modal,
             reader,
             size;
-        
 
         if (!files.length) {
             return;
@@ -139,7 +138,7 @@ window.inputSingleDeletableFile = {
 
             imageData = cropper.getCroppedCanvas().toDataURL();
 
-            scope.querySelector('.js-sdfi-deletable-file__preview').innerHTML = '<img src="' + imageData + '" width="' + size[0] + '" height="auto" class="img-fluid img-thumbnail">';
+            preview.innerHTML = '<img src="' + imageData + '" width="' + size[0] + '" height="auto" class="img-fluid img-thumbnail">';
         }
         modal.hide();
     },
@@ -156,7 +155,7 @@ window.inputSingleDeletableFile = {
         field.querySelector('input[type="file"]').addEventListener('change', this.onFileSelected);
 
         if (resize) {
-            field.querySelector('.js-sdfi-deletable-file__resize').addEventListener('shown.bs.modal', this.onResizeModalShown);
+            resize.addEventListener('shown.bs.modal', this.onResizeModalShown);
             field.querySelector('.js-sdfi-deletable-file__resize-cancel').addEventListener('click', this.onResizeModalCancel);
             field.querySelector('.js-sdfi-deletable-file__resize-validate').addEventListener('click', this.onResizeModalValidate);
         }
