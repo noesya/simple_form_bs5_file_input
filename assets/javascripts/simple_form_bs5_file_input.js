@@ -17,6 +17,8 @@ window.inputSingleDeletableFile = {
             $resizeModal = $('.js-sdfi-deletable-file__resize', $scope),
             files = this.files,
             file,
+            isResizable,
+            isPreviewable,
             hasPreview = $('.js-sdfi-deletable-file__preview', $scope).length > 0,
             hasResize = $resizeModal.length > 0,
             modal,
@@ -28,19 +30,14 @@ window.inputSingleDeletableFile = {
         }
 
         file = files[0];
+        isResizable = (/^image\/(png|jpeg)+$/).test(file.type);
+        isPreviewable = (/^image\/[a-z+]+$/).test(file.type);
 
-        if (!hasResize) {
-            // name display is delayed if we need to resize
-            $scope.addClass('sdfi-deletable-file--with-file');
-            $('.js-sdfi-deletable-file__label', $scope).html(file.name);
-            $('.js-sdfi-deletable-file__delete-field', $scope).val('');
-        }
-
-
-        if (/^image\/[a-z+]+$/.test(file.type) && (hasResize || hasPreview)) {
+        if (isResizable && hasResize || isPreviewable && hasPreview) {
             reader = new FileReader();
             reader.readAsDataURL(file);
-            if (hasResize) {
+            if (isResizable && hasResize) {
+                // Resizable images
                 reader.onload = function () {
                     modal = new bootstrap.Modal($resizeModal, {
                         backdrop: 'static',
@@ -50,13 +47,23 @@ window.inputSingleDeletableFile = {
                     $resizeModal.attr('data-filename', file.name);
                     modal.show();
                 };
-            } else if (hasPreview) {
+            } else {
+                // Previewable images
+                $scope.addClass('sdfi-deletable-file--with-file');
+                $('.js-sdfi-deletable-file__label', $scope).html(file.name);
+                $('.js-sdfi-deletable-file__delete-field', $scope).val('');
                 size = $('.js-sdfi-deletable-file__preview', $scope).attr('data-size')
                     .split('x');
                 reader.onload = function (e) {
                     $('.js-sdfi-deletable-file__preview', $scope).html('<img src="' + e.target.result + '" width="' + size[0] + '" height="auto" class="img-fluid img-thumbnail">');
                 };
             }
+        } else {
+            // Non-resizable and non-previewable files
+            $scope.addClass('sdfi-deletable-file--with-file');
+            $('.js-sdfi-deletable-file__label', $scope).html(file.name);
+            $('.js-sdfi-deletable-file__delete-field', $scope).val('');
+            $('.js-sdfi-deletable-file__preview', $scope).html('');
         }
     },
 
