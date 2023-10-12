@@ -49,6 +49,7 @@ window.inputSingleDeletableFile = {
                 };
             } else {
                 // Previewable images
+                $('.js-sdfi-deletable-file__infos-field', $scope).val('');
                 $scope.addClass('sdfi-deletable-file--with-file');
                 $('.js-sdfi-deletable-file__label', $scope).html(file.name);
                 $('.js-sdfi-deletable-file__delete-field', $scope).val('');
@@ -60,6 +61,7 @@ window.inputSingleDeletableFile = {
             }
         } else {
             // Non-resizable and non-previewable files
+            $('.js-sdfi-deletable-file__infos-field', $scope).val('');
             $scope.addClass('sdfi-deletable-file--with-file');
             $('.js-sdfi-deletable-file__label', $scope).html(file.name);
             $('.js-sdfi-deletable-file__delete-field', $scope).val('');
