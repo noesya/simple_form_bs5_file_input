@@ -92,12 +92,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-secondary js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal">%s</button>
-                      <button type="button" class="btn btn-sm btn-primary js-sdfi-deletable-file__resize-validate">%s</button>
+                      <button type="button" class="btn btn-sm js-sdfi-deletable-file__resize-rotate" aria-label="%s">
+                      <i class="bi bi-arrow-clockwise"></i>
+                      </button>
+                      <div>
+                        <button type="button" class="btn btn-sm btn-secondary js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal">%s</button>
+                        <button type="button" class="btn btn-sm btn-primary js-sdfi-deletable-file__resize-validate">%s</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>', modal_title, close_btn_text, resize_ratio, close_btn_text, validate_btn_text)
+              </div>', modal_title, close_btn_text, resize_ratio, rotate_btn_text, close_btn_text, validate_btn_text)
     end
   end
 
@@ -139,6 +144,11 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def close_btn_text
     I18n.t('simple_form_bs5_file_input.modal_close')
+  end
+
+  def rotate_btn_text
+    # I18n.t('simple_form_bs5_file_input.modal_close')
+    'rotate (+90°)'
   end
 
   def validate_btn_text

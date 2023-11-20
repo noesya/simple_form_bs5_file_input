@@ -78,7 +78,7 @@ window.inputSingleDeletableFile = {
             image = $modal.attr('data-image-result'),
             ratio = $imgContainer.attr('data-ratio');
 
-        $imgContainer.html('<img class="js-" src="' + image + '">');
+        $imgContainer.html('<img class="js-image" src="' + image + '">');
 
         $image = $('img', $imgContainer);
         $image.css('opacity', 0);
@@ -98,6 +98,14 @@ window.inputSingleDeletableFile = {
             });
             $image.css('opacity', 1);
         }, 100);
+    },
+
+    onResizeModalRotate: function (e) {
+        'use strict';
+        var $scope = $(e.target).parents('.js-sdfi-deletable-file'),
+            $imgContainer = $('.js-sdfi-sdfi-deletable-file__resize-image', $scope),
+            $image = $('.js-image', $imgContainer);
+        $image.cropper('rotate', 90);
     },
 
     onResizeModalCancel: function (e) {
@@ -147,8 +155,9 @@ window.inputSingleDeletableFile = {
         });
         $('.js-sdfi-deletable-file__delete-btn', $(field)).on('click', this.onFileDelete);
         $('input[type="file"]', $(field)).on('change', this.onFileSelected);
-
+        
         $('.js-sdfi-deletable-file__resize', field).on('shown.bs.modal', this.onResizeModalShown);
+        $('.js-sdfi-deletable-file__resize-rotate', field).on('click', this.onResizeModalRotate);
         $('.js-sdfi-deletable-file__resize-cancel', field).on('click', this.onResizeModalCancel);
         $('.js-sdfi-deletable-file__resize-validate', field).on('click', this.onResizeModalValidate);
     }
