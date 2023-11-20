@@ -1,6 +1,7 @@
 fr:
   simple_form_bs5_file_input:
     modal_close: Fermer
+    modal_rotate: Tourner l'image
     modal_title: Cadrer l'image
     modal_validate: Valider
     replace_file: Remplacer le fichier

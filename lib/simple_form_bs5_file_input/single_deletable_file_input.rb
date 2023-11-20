@@ -147,8 +147,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def rotate_btn_text
-    # I18n.t('simple_form_bs5_file_input.modal_close')
-    'rotate (+90°)'
+    I18n.t('simple_form_bs5_file_input.modal_rotate')
   end
 
   def validate_btn_text
