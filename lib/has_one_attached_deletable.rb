@@ -1,11 +1,26 @@
 class ActiveRecord::Base
   def self.has_one_attached_deletable(name, **options, &block)
+
     class_eval do
       attr_accessor :"#{name}_delete"
       attr_accessor :"#{name}_infos"
 
       before_validation { send(name).purge_later if send("#{name}_attachment").present? && send("#{name}_delete") == 'true' }
-      after_commit :"resize_#{name}", unless: Proc.new { |u| u.send("#{name}_infos").blank? }
+
+      # From Rails 7.1, after_commit callbacks run in the same order they were defined.
+      # Prior to this version, they ran in reverse order.
+      after_commit_callbacks_run_in_order = Rails
+                                              .application
+                                              .config
+                                              .active_record
+                                              .try(:run_after_transaction_callbacks_in_order_defined)
+      if after_commit_callbacks_run_in_order
+        has_one_attached name, **options, &block
+        after_commit :"resize_#{name}", unless: Proc.new { |u| u.send("#{name}_infos").blank? }
+      else
+        after_commit :"resize_#{name}", unless: Proc.new { |u| u.send("#{name}_infos").blank? }
+        has_one_attached name, **options, &block
+      end
 
       define_method :"#{name}_delete=" do |value|
         instance_variable_set :"@#{name}_delete", value
@@ -52,7 +67,5 @@ class ActiveRecord::Base
         end
       end
     end
-
-    has_one_attached name, **options, &block
   end
 end
