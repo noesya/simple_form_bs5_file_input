@@ -113,7 +113,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def should_display_file?
-    file_attachment.present?
+    file_attachment.present? && file_attachment.blob&.persisted?
   end
 
   def preview_image_width
