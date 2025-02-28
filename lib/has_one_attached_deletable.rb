@@ -24,6 +24,7 @@ class ActiveRecord::Base
 
       define_method :"#{name}_delete=" do |value|
         instance_variable_set :"@#{name}_delete", value
+        attribute_will_change!(:updated_at) unless value.blank?
       end
 
       define_method :"resize_#{name}" do
