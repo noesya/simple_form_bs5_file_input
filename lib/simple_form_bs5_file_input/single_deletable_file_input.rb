@@ -22,11 +22,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
         %s
         %s
       </div>
-    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_infos_name, input_infos_value, input_delete_name, input_delete_value, preview_div, resize_div)
+    ', input_wrapper_classes(wrapper_options), input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_infos_name, input_infos_value, input_delete_name, input_delete_value, preview_div, resize_div)
   end
 
-  def has_file_class
-    'sdfi-deletable-file--with-file' if should_display_file?
+  def input_wrapper_classes(wrapper_options)
+    classes = []
+    classes << 'sdfi-deletable-file--with-file' if should_display_file?
+    error_class = wrapper_options[:error_class]
+    classes << error_class if error_class.present? && has_errors?
+    valid_class = wrapper_options[:valid_class]
+    classes << valid_class if valid_class.present? && valid?
+    classes.join(' ')
   end
 
   def input_field(wrapper_options)
