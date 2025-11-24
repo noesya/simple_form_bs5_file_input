@@ -40,7 +40,6 @@ class ActiveRecord::Base
         height = params['height'].round
         rotation = params['rotate']
         transformations = {}
-        byebug
         if ActiveStorage.variant_processor == :mini_magick
           # From Rails 6, ImageProcessing with MiniMagick uses an 'auto-orient' by default to interpret the EXIF Orientation metadata.
           transformations[:'auto-orient'] = true
