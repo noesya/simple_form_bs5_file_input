@@ -34,18 +34,31 @@ class ActiveRecord::Base
         # reset the infos to prevent multiple resize if multiple save
         instance_variable_set :"@#{name}_infos", nil
 
-        # From Rails 6, ImageProcessing uses an 'auto-orient' by default to interpret the EXIF Orientation metadata.
-        # We declare it in the transformations hash for Rails 5
-        transformations = { :'auto-orient' => true }
-        # Handle rotation
-        transformations[:rotate] = params['rotate'] if params['rotate'].present?
-        # Handle cropping
-        transformations[:crop] = "#{params['width'].round}x#{params['height'].round}+#{params['x'].round}+#{params['y'].round}"
-        # Finalize by repaging
-        transformations.merge!({
-          repage: true,
-          :'+' => true
-        })
+        left = params['x'].round
+        top = params['y'].round
+        width = params['width'].round
+        height = params['height'].round
+        rotation = params['rotate']
+        transformations = {}
+        byebug
+        if ActiveStorage.variant_processor == :mini_magick
+          # From Rails 6, ImageProcessing with MiniMagick uses an 'auto-orient' by default to interpret the EXIF Orientation metadata.
+          transformations[:'auto-orient'] = true
+          # Handle rotation
+          transformations[:rotate] = rotation if rotation.present?
+          # Handle cropping
+          transformations[:crop] = "#{width}x#{height}+#{left}+#{top}"
+          # Finalize by repaging
+          transformations.merge!({
+            repage: true,
+            :'+' => true
+          })
+        elsif ActiveStorage.variant_processor == :vips
+          # Handle rotation
+          transformations[:rotate] = rotation if rotation.present?
+          # Handle cropping
+          transformations[:crop] = [left, top, width, height]
+        end
 
         variant = Rails::VERSION::MAJOR >= 6  ? send(name).variant(**transformations)
                                               : send(name).variant(combine_options: transformations)

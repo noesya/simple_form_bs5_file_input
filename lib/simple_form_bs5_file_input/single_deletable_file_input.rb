@@ -135,7 +135,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     return unless should_display_file?
     # Fichier invariable, pas de chocolat non plus
     return unless file_attachment&.variable?
-    variant = file_attachment.variant(resize: "#{preview_image_width}x")
+    variant = file_attachment.variant(resize_to_fit: [preview_image_width, nil])
     path = url_helpers.polymorphic_url variant, only_path: true
     image_tag path, class: 'img-fluid img-thumbnail', width: preview_image_width
   end
