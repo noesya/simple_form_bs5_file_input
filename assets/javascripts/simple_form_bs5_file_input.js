@@ -71,7 +71,7 @@ window.inputSingleDeletableFile = {
             scope.classList.add('sdfi-deletable-file--with-file');
             scope.querySelector('.js-sdfi-deletable-file__label').innerHTML = file.name;
             scope.querySelector('.js-sdfi-deletable-file__delete-field').value = '';
-            scope.querySelector('.js-sdfi-deletable-file__preview').innerHTML = '';
+            preview.innerHTML = '';
         }
     },
 
