@@ -22,11 +22,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
         %s
         %s
       </div>
-    ', has_file_class, input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_infos_name, input_infos_value, input_delete_name, input_delete_value, preview_div, resize_div)
+    ', input_wrapper_classes(wrapper_options), input_field(wrapper_options), field_classes(wrapper_options), change_file_text, field_id, existing_file_name_or_default_text, input_infos_name, input_infos_value, input_delete_name, input_delete_value, preview_div, resize_div)
   end
 
-  def has_file_class
-    'sdfi-deletable-file--with-file' if should_display_file?
+  def input_wrapper_classes(wrapper_options)
+    classes = []
+    classes << 'sdfi-deletable-file--with-file' if should_display_file?
+    error_class = wrapper_options[:error_class]
+    classes << error_class if error_class.present? && has_errors?
+    valid_class = wrapper_options[:valid_class]
+    classes << valid_class if valid_class.present? && valid?
+    classes.join(' ')
   end
 
   def input_field(wrapper_options)
@@ -92,12 +98,17 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-secondary js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal">%s</button>
-                      <button type="button" class="btn btn-sm btn-primary js-sdfi-deletable-file__resize-validate">%s</button>
+                      <button type="button" class="btn btn-sm js-sdfi-deletable-file__resize-rotate" aria-label="%s">
+                      <i class="bi bi-arrow-clockwise"></i>
+                      </button>
+                      <div>
+                        <button type="button" class="btn btn-sm btn-secondary js-sdfi-deletable-file__resize-cancel" data-bs-dismiss="modal">%s</button>
+                        <button type="button" class="btn btn-sm btn-primary js-sdfi-deletable-file__resize-validate">%s</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>', modal_title, close_btn_text, resize_ratio, close_btn_text, validate_btn_text)
+              </div>', modal_title, close_btn_text, resize_ratio, rotate_btn_text, close_btn_text, validate_btn_text)
     end
   end
 
@@ -108,7 +119,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
   end
 
   def should_display_file?
-    file_attachment.present?
+    file_attachment.present? && file_attachment.blob&.persisted?
   end
 
   def preview_image_width
@@ -124,7 +135,7 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
     return unless should_display_file?
     # Fichier invariable, pas de chocolat non plus
     return unless file_attachment&.variable?
-    variant = file_attachment.variant(resize: "#{preview_image_width}x")
+    variant = file_attachment.variant(resize_to_fit: [preview_image_width, nil])
     path = url_helpers.polymorphic_url variant, only_path: true
     image_tag path, class: 'img-fluid img-thumbnail', width: preview_image_width
   end
@@ -139,6 +150,10 @@ class SingleDeletableFileInput < SimpleForm::Inputs::Base
 
   def close_btn_text
     I18n.t('simple_form_bs5_file_input.modal_close')
+  end
+
+  def rotate_btn_text
+    I18n.t('simple_form_bs5_file_input.modal_rotate')
   end
 
   def validate_btn_text

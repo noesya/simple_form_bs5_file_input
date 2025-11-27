@@ -137,6 +137,17 @@ end
 
 **Simple Form Bootstrap 5 File Input** uses the I18n API to manage the texts displayed. Feel free to overwrite the keys or add languages.
 
+## Notes
+
+### Callbacks
+
+When the resize feature is activated **Simple Form Bootstrap 5 File Input** uses an `after_commit` hook to resize the image. The model linked to the attachment will then be touched.  
+It might cause a problem because messing with others `after_commit` hooks. For example it messes with the Devise `confirmable` module, where the confirmation email is also send on after_commit.   
+Before Rails 7.1 after_commit is the only hook executed backward. So if you add after_commit :function1, then after_commit :function2, function2 will be executed BEFORE function1.  
+After Rails 7.1 after_commit follows the regular order, so function1 will be executed before function2.  
+So for Devise Confirmable, it must be declared AFTER the `has_one_attached_deletable` declaration if Rails version < 7.1, and declared BEFORE the `has_one_attached_deletable` declaration if Rails version >= 7.1
+
+
 ## Information
 
 ### Supported Ruby / Rails versions
