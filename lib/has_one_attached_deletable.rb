@@ -34,10 +34,14 @@ class ActiveRecord::Base
         # reset the infos to prevent multiple resize if multiple save
         instance_variable_set :"@#{name}_infos", nil
 
+        # Skip if any of the required params are missing
+        return unless ['width', 'height', 'x', 'y'].all? { |k| params[k].present? }
         left = params['x'].round
         top = params['y'].round
         width = params['width'].round
         height = params['height'].round
+        # Skip if width or height are not > 0
+        return if width <= 0 || height <= 0
         rotation = params['rotate']
         transformations = {}
         if ActiveStorage.variant_processor == :mini_magick
