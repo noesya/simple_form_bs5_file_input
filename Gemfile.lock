@@ -83,7 +83,7 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
     base64 (0.3.0)
-    bcrypt (3.1.21)
+    bcrypt (3.1.22)
     bigdecimal (4.0.1)
     bootsnap (1.21.1)
       msgpack (~> 1.2)
