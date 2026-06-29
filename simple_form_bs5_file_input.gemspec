@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     'https://github.com/noesya/simple_form_bs5_file_input'
   s.license       = 'MIT'
 
+  s.add_dependency "open-uri"
   s.add_dependency "rails"
   s.add_dependency "simple_form"
 

@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class ActiveRecord::Base
   def self.has_one_attached_deletable(name, **options, &block)
 
